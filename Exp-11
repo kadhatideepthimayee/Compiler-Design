@@ -1,0 +1,27 @@
+11. In a class of Grade 3, Mathematics Teacher asked for the Acronym PEMDAS? All of them are thinking for a while. A smart kid of the class Kishore of the class says it is Parentheses, Exponentiation, Multiplication, Division, Addition, Subtraction. Can you write a C Program to help the students to understand about the operator precedence parsing for an expression containing more than one operator, the order of evaluation depends on the order of operations.
+Code:
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    double a, b;
+    char op;
+
+    printf("Enter an expression (e.g., 5 + 2): ");
+    scanf("%lf %c %lf", &a, &op, &b);
+
+    if (op == '+')
+        printf("Result: %.2lf\n", a + b);
+    else if (op == '-')
+        printf("Result: %.2lf\n", a - b);
+    else if (op == '*')
+        printf("Result: %.2lf\n", a * b);
+    else if (op == '/')
+        printf("Result: %.2lf\n", (b != 0) ? a / b : 0);
+    else if (op == '^')
+        printf("Result: %.2lf\n", pow(a, b));
+    else
+        printf("Invalid operator!\n");
+
+    return 0;
+}
