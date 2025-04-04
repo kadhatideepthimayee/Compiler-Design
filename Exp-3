@@ -1,0 +1,21 @@
+3. Design a lexical Analyzer to validate operators to recognize the operators +,-,*,/ using regular Arithmetic operators .
+Program:
+#include <stdio.h>
+
+int isOperator(char ch) {
+    return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
+}
+
+int main() {
+    char ch;
+    printf("Enter a character: ");
+    scanf(" %c", &ch);
+
+    if (isOperator(ch))
+        printf("It is a valid arithmetic operator.\n");
+    else
+        printf("Not an arithmetic operator.\n");
+
+    return 0;
+}
+
