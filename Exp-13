@@ -1,0 +1,31 @@
+13. Write a C program for implementing a Lexical Analyzer to Count the number of characters, words, and lines.
+Code:
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    char text[1000];
+    int i = 0, characters = 0, words = 0, lines = 1, inWord = 0;
+
+    printf("Enter a paragraph (end with ENTER):\n");
+    fgets(text, sizeof(text), stdin);
+
+    while (text[i] != '\0') {
+        characters++;
+
+        if (text[i] == '\n')
+            lines++;
+
+        if (isspace(text[i]))
+            inWord = 0;
+        else if (!inWord) {
+            inWord = 1;
+            words++;
+        }
+        i++;
+    }
+
+    printf("\nCharacters: %d\nWords: %d\nLines: %d\n", characters, words, lines);
+
+    return 0;
+}
