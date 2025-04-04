@@ -1,0 +1,23 @@
+2. Extend the lexical Analyzer to Check comments, dened as follows in C: a) A comment begins with // and includes all characters until the end of that line. b) A comment begins with /* and includes all characters through the next occurrence of the character sequence */Develop a lexical Analyzer to identify whether a given line is a comment or not
+
+Program:
+#include <stdio.h>
+#include <string.h>
+
+void checkComment(char *line) {
+    if (strncmp(line, "//", 2) == 0)
+        printf("Single-line comment detected.\n");
+    else if (strncmp(line, "/*", 2) == 0 && strstr(line, "*/") != NULL)
+        printf("Multi-line comment detected.\n");
+    else
+        printf("Not a comment.\n");
+}
+
+int main() {
+    char line[100];
+    printf("Enter a line of code: ");
+    fgets(line, sizeof(line), stdin);
+
+    checkComment(line);
+    return 0;
+}
