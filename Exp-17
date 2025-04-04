@@ -1,0 +1,84 @@
+17. Write a LEX program to print all the constants in the given C source program file.
+Code:
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX_LEN 100
+
+// Function to check if a string is a valid integer constant
+int isInteger(char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isdigit(str[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+// Function to check if a string is a valid floating-point constant
+int isFloat(char *str) {
+    int dotCount = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == '.') {
+            dotCount++;
+        } else if (!isdigit(str[i])) {
+            return 0;
+        }
+    }
+    return (dotCount == 1);
+}
+
+// Function to check if a token is a character constant
+int isCharConstant(char *str) {
+    return (str[0] == '\'' && str[2] == '\'' && str[3] == '\0');
+}
+
+int main() {
+    FILE *file;
+    char filename[MAX_LEN], token[MAX_LEN];
+    char ch;
+    int index = 0;
+
+    // Get the filename from the user
+    printf("Enter the filename: ");
+    scanf("%s", filename);
+
+    file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    printf("Constants found in the file:\n");
+
+    while ((ch = fgetc(file)) != EOF) {
+        // If whitespace or special character is encountered, process the token
+        if (isspace(ch) || ch == ';' || ch == ',' || ch == '(' || ch == ')' || ch == '=' || ch == '\n') {
+            if (index > 0) {
+                token[index] = '\0';  // Null-terminate the token
+                if (isInteger(token)) {
+                    printf("Integer Constant: %s\n", token);
+                } else if (isFloat(token)) {
+                    printf("Float Constant: %s\n", token);
+                }
+                index = 0;
+            }
+        } else if (ch == '\'') {  // Character constant
+            token[index++] = ch;
+            token[index++] = fgetc(file);
+            token[index++] = fgetc(file);
+            token[index] = '\0';
+            if (isCharConstant(token)) {
+                printf("Character Constant: %s\n", token);
+            }
+            index = 0;
+        } else {
+            token[index++] = ch;
+        }
+    }
+
+    fclose(file);
+    return 0;
+}
