@@ -1,0 +1,41 @@
+18. Write a LEX program to count the number of Macros defined and header files included
+in the C program.
+Code:
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    FILE *file;
+    char filename[100], line[256];
+    int macro_count = 0, header_count = 0;
+
+    // Get the file name from the user
+    printf("Enter the C source file name: ");
+    scanf("%s", filename);
+
+    // Open the file
+    file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error: Could not open file %s\n", filename);
+        return 1;
+    }
+
+    // Read each line and check for #define and #include
+    while (fgets(line, sizeof(line), file)) {
+        if (strncmp(line, "#define", 7) == 0) {
+            macro_count++;
+        } else if (strncmp(line, "#include", 8) == 0) {
+            header_count++;
+        }
+    }
+
+    // Close the file
+    fclose(file);
+
+    // Print results
+    printf("\nNumber of macros (#define) found: %d\n", macro_count);
+    printf("Number of header files (#include) found: %d\n", header_count);
+
+    return 0;
+}
