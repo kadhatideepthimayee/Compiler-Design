@@ -1,0 +1,17 @@
+14. Write a C Program for code optimization to eliminate common subexpression.
+Code:
+#include <stdio.h>
+
+int main() {
+    int a, b, temp, result;
+
+    printf("Enter values for a and b: ");
+    scanf("%d %d", &a, &b);
+
+    temp = a + b; 
+    result = temp * 2;
+
+    printf("Optimized Result: %d\n", result);
+
+    return 0;
+}
